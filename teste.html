@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Gabriel Rodrigues // Software Engineer - OS Portfolio</title>
+<!-- Tailwind CSS v3 with Plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Fonts for Frutiger Aero / Aqua UI -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&amp;family=Segoe+UI:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- BEGIN: Custom Aqua & Frutiger Aero Styles -->
+<style data-purpose="aqua-theme-core">
+    :root {
+      --aqua-glass: rgba(13, 56, 75, 0.65);
+      --aqua-glass-border: rgba(118, 222, 255, 0.45);
+      --glow-aqua: rgba(43, 219, 240, 0.35);
+      --window-header-bg: linear-gradient(180deg, rgba(82, 172, 209, 0.85) 0%, rgba(20, 80, 110, 0.85) 50%, rgba(10, 52, 75, 0.95) 100%);
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: radial-gradient(circle at 50% 15%, #0d5c75 0%, #062b3b 45%, #02131d 100%);
+      color: #e2f5fc;
+      overflow-x: hidden;
+      user-select: none;
+    }
+
+    .font-mono-code {
+      font-family: 'Fira Code', monospace;
+    }
+
+    /* Frutiger Aero Glass Panels */
+    .aero-window {
+      background: linear-gradient(135deg, rgba(14, 66, 92, 0.72) 0%, rgba(5, 34, 48, 0.88) 100%);
+      border: 1px solid rgba(130, 220, 255, 0.4);
+      box-shadow: 
+        0 10px 30px rgba(0, 0, 0, 0.6),
+        inset 0 1px 1px rgba(255, 255, 255, 0.6),
+        inset 0 0 15px rgba(59, 196, 230, 0.2);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-radius: 10px;
+    }
+
+    .aero-window-header {
+      background: linear-gradient(180deg, 
+        rgba(135, 206, 235, 0.55) 0%, 
+        rgba(40, 120, 160, 0.7) 48%, 
+        rgba(15, 60, 85, 0.8) 52%, 
+        rgba(25, 95, 130, 0.6) 100%);
+      border-bottom: 1px solid rgba(120, 215, 255, 0.35);
+      border-top-left-radius: 9px;
+      border-top-right-radius: 9px;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    }
+
+    /* Window Control Orbs (Aqua OS buttons) */
+    .aqua-btn-close {
+      background: radial-gradient(circle at 35% 30%, #ff9e9e, #e03232 60%, #7d0d0d);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.6), inset 0 1px 2px rgba(255,255,255,0.8);
+    }
+    .aqua-btn-min {
+      background: radial-gradient(circle at 35% 30%, #fff7a1, #dfb112 60%, #855b00);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.6), inset 0 1px 2px rgba(255,255,255,0.8);
+    }
+    .aqua-btn-max {
+      background: radial-gradient(circle at 35% 30%, #9bfd9e, #2ecc40 60%, #0d5e18);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.6), inset 0 1px 2px rgba(255,255,255,0.8);
+    }
+
+    /* Aqua Pill Badges */
+    .aqua-pill {
+      background: linear-gradient(180deg, rgba(80, 210, 240, 0.4) 0%, rgba(20, 110, 140, 0.6) 50%, rgba(8, 60, 85, 0.8) 100%);
+      border: 1px solid rgba(140, 235, 255, 0.6);
+      box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.7), 0 2px 5px rgba(0,0,0,0.3);
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7);
+    }
+    .aqua-pill:hover {
+      background: linear-gradient(180deg, rgba(120, 230, 255, 0.6) 0%, rgba(35, 140, 175, 0.7) 50%, rgba(12, 80, 110, 0.9) 100%);
+      border-color: #a8f0ff;
+    }
+
+    /* Giant 3D Gel Button 'Baixar CV' */
+    .gel-button-large {
+      background: linear-gradient(180deg, 
+        #aefae3 0%, 
+        #3bf3be 35%, 
+        #1ec299 50%, 
+        #0fa882 52%, 
+        #07775b 88%, 
+        #044d3b 100%);
+      border: 1.5px solid #d4fffa;
+      box-shadow: 
+        0 4px 15px rgba(0, 0, 0, 0.5),
+        0 0 20px rgba(50, 240, 185, 0.4),
+        inset 0 2px 2px rgba(255, 255, 255, 0.85),
+        inset 0 -2px 4px rgba(0, 40, 30, 0.6);
+      text-shadow: 0 1px 1px rgba(255, 255, 255, 0.6), 0 -1px 1px rgba(0, 60, 40, 0.8);
+      position: relative;
+      overflow: hidden;
+    }
+    .gel-button-large::after {
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: 6%;
+      right: 6%;
+      height: 44%;
+      background: linear-gradient(180deg, rgba(255,255,255,0.75) 0%, rgba(255,255,255,0.15) 100%);
+      border-radius: 9999px;
+      pointer-events: none;
+    }
+    .gel-button-large:hover {
+      filter: brightness(1.1);
+      transform: translateY(-1px);
+    }
+    .gel-button-large:active {
+      transform: translateY(1px);
+      filter: brightness(0.95);
+    }
+
+    /* Interactive Graph Node Style */
+    .graph-node {
+      background: linear-gradient(180deg, rgba(25, 80, 105, 0.85) 0%, rgba(10, 45, 60, 0.95) 100%);
+      border: 1px solid rgba(130, 225, 255, 0.5);
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.4);
+      border-radius: 14px;
+    }
+    .graph-node-active {
+      border: 1.5px solid #4df5cc;
+      box-shadow: 0 0 15px rgba(77, 245, 204, 0.5), inset 0 1px 1px #fff;
+    }
+
+    /* Cartridge / Action Pill Buttons */
+    .cartridge-btn {
+      background: linear-gradient(180deg, #3aaad8 0%, #176589 50%, #0e4863 100%);
+      border: 1px solid #7be3ff;
+      box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.7);
+      text-shadow: 0 -1px 1px rgba(0,0,0,0.6);
+    }
+    .cartridge-btn:hover {
+      background: linear-gradient(180deg, #4dc4f5 0%, #207ca9 50%, #135777 100%);
+    }
+
+    /* Pulse Orbs for Maturity */
+    .orb-sprout {
+      background: radial-gradient(circle at 35% 35%, #88ff9f, #22c55e 60%, #116930);
+      box-shadow: 0 0 6px rgba(34, 197, 94, 0.8), inset 0 1px 1px #fff;
+    }
+    .orb-seed {
+      background: radial-gradient(circle at 35% 35%, #76ddff, #0ea5e9 60%, #075276);
+      box-shadow: 0 0 6px rgba(14, 165, 233, 0.8), inset 0 1px 1px #fff;
+    }
+    .orb-evergreen {
+      background: radial-gradient(circle at 35% 35%, #80ffda, #10b981 60%, #06553a);
+      box-shadow: 0 0 6px rgba(16, 185, 129, 0.8), inset 0 1px 1px #fff;
+    }
+
+    /* Scrollbars custom Aero */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: rgba(4, 25, 36, 0.7);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(70, 175, 215, 0.5);
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(100, 210, 255, 0.8);
+    }
+  </style>
+<!-- END: Custom Aqua & Frutiger Aero Styles -->
+</head>
+<body class="min-h-screen relative flex flex-col justify-between selection:bg-cyan-400 selection:text-black pb-1">
+<!-- BEGIN: Background Atmosphere & Bubbles -->
+<div class="fixed inset-0 pointer-events-none z-0 overflow-hidden" data-purpose="background-fx">
+<!-- Matrix rain cyan overlay lines -->
+<div class="absolute inset-0 opacity-15" style="background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(34, 211, 238, 0.25) 3px, rgba(34, 211, 238, 0.25) 4px); background-size: 100% 6px;"></div>
+<!-- Water wave light rays -->
+<div class="absolute -top-32 left-1/4 w-3/5 h-80 bg-cyan-400/10 blur-[90px] rounded-full transform rotate-12"></div>
+<div class="absolute top-1/2 right-10 w-96 h-96 bg-emerald-400/10 blur-[100px] rounded-full"></div>
+<!-- Ambient floating bubble glows -->
+<div class="absolute bottom-12 left-10 w-4 h-4 rounded-full border border-cyan-200/40 bg-white/20 blur-[0.5px]"></div>
+<div class="absolute bottom-36 left-48 w-6 h-6 rounded-full border border-cyan-200/50 bg-cyan-100/20 blur-[0.5px]"></div>
+<div class="absolute top-20 right-32 w-8 h-8 rounded-full border border-cyan-300/40 bg-white/10 blur-[1px]"></div>
+</div>
+<!-- END: Background Atmosphere & Bubbles -->
+<!-- BEGIN: Desktop Top Navigation Bar -->
+<header class="relative z-10 w-full px-4 py-2 border-b border-cyan-500/25 bg-[#072433]/80 backdrop-blur-md flex items-center justify-between text-xs tracking-wide shadow-lg" data-purpose="os-topbar">
+<!-- Brand / Identity status -->
+<div class="flex items-center space-x-3">
+<span class="text-sm font-semibold tracking-tight text-white drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)]">gabrielpinho.me</span>
+<div class="flex items-center space-x-1.5 px-2 py-0.5 rounded-full bg-cyan-950/60 border border-cyan-500/30">
+<span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_#34d399]"></span>
+<span class="text-[11px] text-cyan-200 font-medium">online</span>
+</div>
+<span class="text-cyan-500/70">/</span>
+<span class="text-cyan-300/90 font-mono">PUCRS</span>
+</div>
+<!-- Center Navigation Links -->
+<nav class="hidden md:flex items-center space-x-6 text-cyan-200 font-mono text-xs">
+<a class="hover:text-white transition-colors duration-150 flex items-center gap-1" href="#projetos">
+<span class="text-cyan-500">/</span> projetos
+      </a>
+<a class="text-white font-medium border-b border-cyan-400 pb-0.5 flex items-center gap-1" href="#jardim">
+<span class="text-cyan-500">/</span> jardim
+      </a>
+<a class="hover:text-white transition-colors duration-150 flex items-center gap-1" href="#docs">
+<span class="text-cyan-500">/</span> docs
+      </a>
+</nav>
+<!-- Top Right: Spotlight Search & GitHub handle -->
+<div class="flex items-center space-x-3">
+<div class="relative flex items-center">
+<span class="absolute left-2.5 text-[10px] text-cyan-400/80 font-mono font-bold">⌘K</span>
+<input class="bg-[#041a25]/90 border border-cyan-600/40 rounded-full pl-8 pr-3 py-1 text-xs text-cyan-100 placeholder-cyan-500/70 focus:outline-none focus:border-cyan-300 focus:ring-1 focus:ring-cyan-300 w-52 md:w-64 transition-all" placeholder="Search notes, docs, stack..." type="text"/>
+</div>
+<a class="flex items-center space-x-1.5 px-2.5 py-1 rounded-full bg-cyan-900/40 hover:bg-cyan-800/60 border border-cyan-500/30 text-cyan-200 text-xs transition" href="https://github.com" rel="noreferrer" target="_blank">
+<!-- SVG GitHub icon -->
+<svg class="w-3.5 h-3.5 fill-current text-cyan-300" viewbox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"></path></svg>
+<span class="font-mono text-[11px]">GitHub / @pinhogo</span>
+</a>
+</div>
+</header>
+<!-- END: Desktop Top Navigation Bar -->
+<!-- BEGIN: Main Bento Desktop Canvas -->
+<main class="relative z-10 flex-1 max-w-[1720px] w-full mx-auto p-3.5 md:p-5 flex flex-col gap-4 justify-between" data-purpose="os-canvas">
+<!-- Top Row: Identity Window (Left), Digital Garden Knowledge Graph (Center), Featured Project (Right) -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-4 items-stretch">
+<!-- ==================== WINDOW 01: IDENTITY ==================== -->
+<section class="lg:col-span-3 flex flex-col aero-window" data-purpose="window-identity">
+<!-- Aqua Titlebar -->
+<div class="aero-window-header px-3.5 py-1.5 flex items-center justify-between">
+<div class="flex items-center space-x-2">
+<span class="font-mono text-[11px] font-semibold text-cyan-200 tracking-wider">01 / IDENTITY</span>
+</div>
+<div class="flex items-center space-x-1.5">
+<span class="w-3 h-3 rounded-full aqua-btn-min cursor-pointer inline-block"></span>
+<span class="w-3 h-3 rounded-full aqua-btn-max cursor-pointer inline-block"></span>
+<span class="w-3 h-3 rounded-full aqua-btn-close cursor-pointer inline-block"></span>
+</div>
+</div>
+<!-- Window Inner Content -->
+<div class="p-5 flex-1 flex flex-col justify-between">
+<div>
+<h1 class="text-2xl lg:text-3xl font-bold tracking-tight text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
+              Gabriel Rodrigues
+            </h1>
+<p class="text-cyan-300 font-mono text-sm mt-0.5 tracking-normal">
+              / Software Engineer
+            </p>
+<p class="mt-4 text-xs leading-relaxed text-cyan-100/90 font-light drop-shadow">
+              CS / Software Engineering student at PUCRS. Building systems, tooling, and cultivating public knowledge.
+            </p>
+<!-- Tech Stack Pills -->
+<div class="mt-5 flex flex-wrap gap-2">
+<span class="aqua-pill text-[11px] font-semibold px-3 py-1 rounded-full text-white cursor-default">Java</span>
+<span class="aqua-pill text-[11px] font-semibold px-3 py-1 rounded-full text-white cursor-default">PHP</span>
+<span class="aqua-pill text-[11px] font-semibold px-3 py-1 rounded-full text-white cursor-default">TypeScript</span>
+<span class="aqua-pill text-[11px] font-semibold px-3 py-1 rounded-full text-white cursor-default">Go</span>
+<span class="aqua-pill text-[11px] font-semibold px-3 py-1 rounded-full text-cyan-100 cursor-default">Linux/Arch</span>
+</div>
+</div>
+<!-- Hero Action Button: 3D Gel Pill 'Baixar CV' -->
+<div class="mt-8 pt-2">
+<a class="gel-button-large block w-full text-center py-2.5 rounded-full font-bold text-base tracking-wide text-emerald-950 transition-all duration-200 shadow-xl" data-purpose="cta-download-cv" href="#baixar-cv">
+              Baixar CV
+            </a>
+</div>
+</div>
+</section>
+<!-- ==================== WINDOW 03: DIGITAL GARDEN (CENTER GRAPH) ==================== -->
+<section class="lg:col-span-6 flex flex-col aero-window" data-purpose="window-digital-garden">
+<!-- Aqua Titlebar -->
+<div class="aero-window-header px-3.5 py-1.5 flex items-center justify-between">
+<div class="flex items-center space-x-2">
+<span class="font-mono text-[11px] font-semibold text-cyan-200 tracking-wider">03 / DIGITAL GARDEN</span>
+</div>
+<div class="flex items-center space-x-1.5">
+<span class="w-3 h-3 rounded-full aqua-btn-min cursor-pointer inline-block"></span>
+<span class="w-3 h-3 rounded-full aqua-btn-max cursor-pointer inline-block"></span>
+<span class="w-3 h-3 rounded-full aqua-btn-close cursor-pointer inline-block"></span>
+</div>
+</div>
+<!-- Window Inner Content -->
+<div class="p-3.5 flex-1 flex flex-col">
+<!-- Subheader & controls -->
+<div class="flex flex-wrap items-center justify-between pb-2 border-b border-cyan-500/20 gap-2">
+<div>
+<h2 class="text-base font-bold text-white tracking-tight drop-shadow">
+                Base de Conhecimento <span class="text-cyan-400">//</span> Grafo &amp; Mapas Mentais
+              </h2>
+</div>
+<div class="flex items-center space-x-3 text-[11px] font-mono text-cyan-300">
+<span class="text-white bg-cyan-900/60 px-2 py-0.5 rounded border border-cyan-400/40">[ Grafo ]</span>
+<span class="hover:text-white cursor-pointer transition">Mapas mentais</span>
+<span class="hover:text-white cursor-pointer transition">Índice</span>
+</div>
+</div>
+<!-- Radar Graph Search Bar and Node Count -->
+<div class="py-2 flex items-center justify-between text-xs font-mono text-cyan-300">
+<div class="flex items-center space-x-2">
+<span class="text-cyan-400">⌕</span>
+<span class="text-cyan-200/80">Buscar tópico...</span>
+</div>
+<div class="text-[11px] text-cyan-300/80">
+<span>24 nodes</span> <span class="text-cyan-500">/</span> <span>36 links</span>
+</div>
+</div>
+<!-- Interactive Radar Grid & Graph Viewport -->
+<div class="relative flex-1 min-h-[240px] rounded-lg bg-[#021822]/80 border border-cyan-600/30 overflow-hidden flex" data-purpose="radar-graph-canvas">
+<!-- Radar Target Concentric Rings Background -->
+<svg class="absolute inset-0 w-full h-full pointer-events-none opacity-30" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<radialgradient cx="50%" cy="50%" id="radarGlow" r="50%">
+<stop offset="0%" stop-color="#00f2fe" stop-opacity="0.3"></stop>
+<stop offset="100%" stop-color="#000" stop-opacity="0"></stop>
+</radialgradient>
+</defs>
+<circle cx="50%" cy="50%" fill="none" r="40" stroke="#38bdf8" stroke-dasharray="3,3" stroke-width="1"></circle>
+<circle cx="50%" cy="50%" fill="none" r="90" stroke="#38bdf8" stroke-width="1"></circle>
+<circle cx="50%" cy="50%" fill="none" r="150" stroke="#38bdf8" stroke-dasharray="4,4" stroke-width="1"></circle>
+<line stroke="#0284c7" stroke-dasharray="2,2" stroke-width="1" x1="50%" x2="50%" y1="0%" y2="100%"></line>
+<line stroke="#0284c7" stroke-dasharray="2,2" stroke-width="1" x1="0%" x2="100%" y1="50%" y2="50%"></line>
+<!-- Connective lines between nodes -->
+<path d="M 230 135 L 120 70 M 230 135 L 360 70 M 230 135 L 130 190 M 230 135 L 340 200 M 130 190 L 140 230" fill="none" stroke="#4df5cc" stroke-opacity="0.6" stroke-width="1.5"></path>
+</svg>
+<!-- Graph Area (Left 65%) -->
+<div class="relative w-full md:w-[68%] h-full p-3 select-none">
+<!-- Zoom controls -->
+<div class="absolute top-2 left-2 flex space-x-1 bg-black/40 border border-cyan-500/30 rounded p-0.5 text-[10px] font-mono text-cyan-300">
+<button class="px-1.5 hover:bg-cyan-700/40 rounded">+</button>
+<button class="px-1.5 hover:bg-cyan-700/40 rounded">-</button>
+</div>
+<!-- Node: Autômatos -->
+<div class="absolute top-6 left-6 graph-node px-2.5 py-1 text-center cursor-pointer hover:border-cyan-300 transition" style="transform: scale(0.9);">
+<div class="text-[11px] font-bold text-emerald-300">Autômatos</div>
+<div class="text-[9px] font-mono text-cyan-200">REGEX 4 notas</div>
+</div>
+<!-- Node: Architecture Patterns -->
+<div class="absolute top-6 right-6 graph-node px-2.5 py-1 text-center cursor-pointer hover:border-cyan-300 transition" style="transform: scale(0.9);">
+<div class="text-[11px] font-bold text-cyan-200">Architecture Patterns</div>
+<div class="text-[9px] font-mono text-cyan-300">TDD 3 notas</div>
+</div>
+<!-- Central Node: Data Structures (Active) -->
+<div class="absolute top-[38%] left-[28%] graph-node graph-node-active px-3.5 py-1.5 text-center cursor-pointer shadow-lg z-10">
+<div class="text-xs font-bold text-white">Data Structures</div>
+<div class="text-[10px] font-mono text-cyan-300">Pilha 3 notes</div>
+</div>
+<!-- Node: Linux Kernel -->
+<div class="absolute bottom-12 left-8 graph-node px-2.5 py-1 text-center cursor-pointer hover:border-cyan-300 transition" style="transform: scale(0.9);">
+<div class="text-[11px] font-bold text-cyan-200">Linux Kernel /Configs</div>
+<div class="text-[9px] font-mono text-cyan-300">TLLS 4 notas</div>
+</div>
+<!-- Node: Arch dotfiles -->
+<div class="absolute bottom-2 left-16 graph-node px-2 py-0.5 text-center cursor-pointer hover:border-cyan-300 transition" style="transform: scale(0.85);">
+<div class="text-[10px] font-bold text-cyan-300">Arch / dotfiles</div>
+<div class="text-[8px] font-mono text-cyan-400">CONFIG 2 arquivos</div>
+</div>
+<!-- Node: Systems Design -->
+<div class="absolute bottom-10 right-8 graph-node px-2.5 py-1 text-center cursor-pointer hover:border-cyan-300 transition" style="transform: scale(0.9);">
+<div class="text-[11px] font-bold text-cyan-200">Systems Design</div>
+<div class="text-[9px] font-mono text-cyan-300">HTTP 3 notas</div>
+</div>
+<!-- Zoom level indicator -->
+<div class="absolute bottom-1 right-2 text-[9px] font-mono text-cyan-500">
+                100%
+              </div>
+</div>
+<!-- Inspector Panel (Right 32%) -->
+<div class="hidden md:flex w-[32%] bg-[#031d2a]/90 border-l border-cyan-500/30 p-2.5 flex-col justify-between text-xs" data-purpose="graph-inspector">
+<div>
+<div class="text-[9px] font-mono uppercase tracking-wider text-cyan-400/90 pb-1 border-b border-cyan-500/20">
+                  Inspector / Selected Node
+                </div>
+<div class="mt-2">
+<h3 class="text-sm font-bold text-white">Data Structure</h3>
+<p class="text-[10px] font-mono text-cyan-300/80 truncate">~1peers/recortes-ds-da links</p>
+</div>
+<!-- Inspector Quick Action Buttons -->
+<div class="mt-2.5 flex items-center space-x-1.5">
+<button class="cartridge-btn px-2.5 py-0.5 rounded text-[10px] font-semibold text-white">Read</button>
+<button class="bg-cyan-950/60 hover:bg-cyan-900/80 border border-cyan-500/40 px-2 py-0.5 rounded text-[10px] font-mono text-cyan-200">Download</button>
+</div>
+<!-- Node Meta Content preview -->
+<div class="mt-3 text-[10px] leading-relaxed text-cyan-100/80 font-mono">
+<div class="text-cyan-300 font-semibold mb-0.5">Trees, queues &amp; complexity</div>
+<p class="text-[9px] text-cyan-200/70">
+                    Notas sobre estruturas. Árvores e análise assintótica. As analogias do algoritmo. Os conceitos implementados.
+                  </p>
+<ul class="mt-1.5 space-y-0.5 text-[9px] text-cyan-300">
+<li>↳ Binary Search Trees</li>
+<li>↳ Big O / time &amp; specs</li>
+</ul>
+</div>
+</div>
+<!-- Node Footer status -->
+<div class="pt-2 border-t border-cyan-500/20 flex items-center justify-between text-[9px] font-mono text-cyan-400">
+<span class="flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Broto
+                </span>
+<span>.md / 13 kb</span>
+</div>
+</div>
+</div>
+<!-- Garden Maturity Legend Bottom Footer -->
+<div class="mt-2.5 flex items-center justify-between text-[11px] font-mono text-cyan-300/90 pt-1">
+<div class="flex items-center space-x-4">
+<span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full orb-seed"></span> Semente</span>
+<span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full orb-sprout"></span> Broto</span>
+<span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full orb-evergreen"></span> Perene</span>
+</div>
+<div class="text-[10px] uppercase tracking-wider text-cyan-400/70">
+              Local Knowledge // Always Growing
+            </div>
+</div>
+</div>
+</section>
+<!-- ==================== WINDOW 02: FEATURED PROJECT ==================== -->
+<section class="lg:col-span-3 flex flex-col aero-window" data-purpose="window-featured-project">
+<!-- Aqua Titlebar -->
+<div class="aero-window-header px-3.5 py-1.5 flex items-center justify-between">
+<div class="flex items-center space-x-2">
+<span class="font-mono text-[11px] font-semibold text-cyan-200 tracking-wider">02 / FEATURED PROJECT</span>
+</div>
+<div class="flex items-center space-x-1.5">
+<span class="w-3 h-3 rounded-full aqua-btn-min cursor-pointer inline-block"></span>
+<span class="w-3 h-3 rounded-full aqua-btn-max cursor-pointer inline-block"></span>
+<span class="w-3 h-3 rounded-full aqua-btn-close cursor-pointer inline-block"></span>
+</div>
+</div>
+<!-- Window Inner Content -->
+<div class="p-4 flex-1 flex flex-col justify-between">
+<div>
+<!-- Title & Badge -->
+<div class="flex items-center justify-between">
+<h2 class="text-xl font-bold text-white tracking-tight drop-shadow">Garden CLI</h2>
+<span class="text-[10px] font-mono uppercase bg-emerald-950/80 text-emerald-300 border border-emerald-500/50 px-2 py-0.5 rounded-full font-semibold">
+                Concept / Tooling
+              </span>
+</div>
+<!-- Description -->
+<p class="mt-2 text-xs text-cyan-100/90 leading-normal">
+              Turn scattered Markdown into a searchable knowledge index.
+            </p>
+<!-- Schematic Flow Diagram Block -->
+<div class="mt-4 p-2.5 rounded-lg bg-[#031c26]/90 border border-cyan-500/30">
+<div class="text-[10px] font-mono text-cyan-300 flex items-center justify-between">
+<span class="px-1.5 py-0.5 rounded bg-cyan-950/90 border border-cyan-400/40 text-cyan-200">source/*.md</span>
+<span class="text-cyan-400">→</span>
+<span class="px-1.5 py-0.5 rounded bg-cyan-950/90 border border-cyan-400/40 text-cyan-200">parser + index</span>
+<span class="text-cyan-400">→</span>
+<span class="px-1.5 py-0.5 rounded bg-cyan-950/90 border border-cyan-400/40 text-cyan-200">search / API</span>
+</div>
+</div>
+<!-- Terminal Matrix Preview Snippet -->
+<div class="mt-3 p-2.5 rounded bg-[#011018] border border-cyan-800/50 font-mono text-[9px] text-emerald-400/90 leading-tight space-y-1">
+<div class="text-cyan-500">// indexing notes...</div>
+<div>$ garden build --target ./dist</div>
+<div class="text-cyan-300">✓ Parsed 142 markdown documents</div>
+<div class="text-cyan-300">✓ Inverted index cached: 18.2ms</div>
+<div class="text-cyan-400/70">ready at: http://localhost:8080</div>
+</div>
+</div>
+<!-- Bottom Links and Tech Stack icons -->
+<div class="mt-5 pt-3 border-t border-cyan-500/20 flex items-center justify-between text-xs font-mono">
+<div class="flex items-center space-x-3 text-cyan-200">
+<a class="hover:text-cyan-300 underline decoration-cyan-500/50 flex items-center gap-1" href="#">
+                Live demo <span class="text-[10px]">→</span>
+</a>
+<a class="hover:text-cyan-300 underline decoration-cyan-500/50 flex items-center gap-1" href="#">
+                Repository <span class="text-[10px]">→</span>
+</a>
+</div>
+<div class="flex items-center space-x-1.5 text-[11px] font-semibold text-cyan-300">
+<span>Go</span>
+<span class="text-cyan-600">•</span>
+<span>SQLite</span>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Bottom Row: Window 05 Changelog Table (Left) & Window 04 Resources Terminal (Right) -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-4 items-stretch">
+<!-- ==================== WINDOW 05: CHANGELOG OF LEARNING ==================== -->
+<section class="lg:col-span-8 flex flex-col aero-window" data-purpose="window-changelog">
+<!-- Aqua Titlebar -->
+<div class="aero-window-header px-3.5 py-1.5 flex items-center justify-between">
+<div class="flex items-center space-x-2">
+<span class="font-mono text-[11px] font-semibold text-cyan-200 tracking-wider">05 / CHANGELOG OF LEARNING</span>
+</div>
+<div class="flex items-center space-x-1.5">
+<span class="w-3 h-3 rounded-full aqua-btn-min cursor-pointer inline-block"></span>
+<span class="w-3 h-3 rounded-full aqua-btn-max cursor-pointer inline-block"></span>
+<span class="w-3 h-3 rounded-full aqua-btn-close cursor-pointer inline-block"></span>
+</div>
+</div>
+<!-- Window Inner Content -->
+<div class="p-4 flex-1 flex flex-col justify-between">
+<!-- Title & Filter Tabs -->
+<div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+<h2 class="text-base md:text-lg font-bold text-white tracking-tight drop-shadow">
+              Notas Recentes &amp; Aprendizados em Público
+            </h2>
+<!-- Filter Badges -->
+<div class="flex items-center space-x-1.5 text-[11px] font-mono">
+<button class="bg-cyan-200 text-cyan-950 font-bold px-2.5 py-0.5 rounded shadow-sm">Todos</button>
+<button class="bg-cyan-950/70 text-cyan-300 border border-cyan-500/30 hover:bg-cyan-900/60 px-2 py-0.5 rounded">PUCRS</button>
+<button class="bg-cyan-950/70 text-cyan-300 border border-cyan-500/30 hover:bg-cyan-900/60 px-2 py-0.5 rounded">Tech</button>
+<button class="bg-cyan-950/70 text-cyan-300 border border-cyan-500/30 hover:bg-cyan-900/60 px-2 py-0.5 rounded">Hardware/Eng</button>
+<button class="bg-cyan-950/70 text-cyan-300 border border-cyan-500/30 hover:bg-cyan-900/60 px-2 py-0.5 rounded">Ensaios</button>
+</div>
+</div>
+<!-- Interactive Learning Notes Data Table -->
+<div class="overflow-x-auto">
+<table class="w-full text-left text-xs" data-purpose="notes-data-table">
+<thead>
+<tr class="border-b border-cyan-500/30 text-[10px] font-mono text-cyan-300/80 uppercase tracking-wider">
+<th class="py-1.5 px-2 font-medium">Maturidade</th>
+<th class="py-1.5 px-3 font-medium">Nota / Artigo</th>
+<th class="py-1.5 px-3 font-medium">Relacionado</th>
+<th class="py-1.5 px-2 font-medium">Atualizado</th>
+<th class="py-1.5 px-1 font-medium text-right"></th>
+</tr>
+</thead>
+<tbody class="divide-y divide-cyan-500/15 font-mono text-[11px]">
+<!-- Row 1 -->
+<tr class="hover:bg-cyan-800/20 transition-colors">
+<td class="py-2 px-2 whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 text-emerald-300 font-semibold">
+<span class="w-2.5 h-2.5 rounded-full orb-sprout inline-block"></span> Broto
+                    </span>
+</td>
+<td class="py-2 px-3 text-white font-sans text-xs font-medium">
+                    Árvores, filas e a escolha da estrutura certa
+                  </td>
+<td class="py-2 px-3 text-cyan-300/80">PUCRS / Java / DSA</td>
+<td class="py-2 px-2 text-cyan-200/60 whitespace-nowrap">14 nov 2026</td>
+<td class="py-2 px-1 text-right text-cyan-400">···</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-cyan-800/20 transition-colors">
+<td class="py-2 px-2 whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 text-emerald-400 font-semibold">
+<span class="w-2.5 h-2.5 rounded-full orb-evergreen inline-block"></span> Perene
+                    </span>
+</td>
+<td class="py-2 px-3 text-white font-sans text-xs font-medium">
+                    Um ambiente Arch que eu consigo reconstruir
+                  </td>
+<td class="py-2 px-3 text-cyan-300/80">Linux / dotfiles</td>
+<td class="py-2 px-2 text-cyan-200/60 whitespace-nowrap">12 nov 2026</td>
+<td class="py-2 px-1 text-right text-cyan-400">···</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-cyan-800/20 transition-colors">
+<td class="py-2 px-2 whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 text-cyan-300 font-semibold">
+<span class="w-2.5 h-2.5 rounded-full orb-seed inline-block"></span> Semente
+                    </span>
+</td>
+<td class="py-2 px-3 text-white font-sans text-xs font-medium">
+                    Autômatos: de expressões regulares a estados
+                  </td>
+<td class="py-2 px-3 text-cyan-300/80">PUCRS / Teoria</td>
+<td class="py-2 px-2 text-cyan-200/60 whitespace-nowrap">10 nov 2026</td>
+<td class="py-2 px-1 text-right text-cyan-400">···</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-cyan-800/20 transition-colors">
+<td class="py-2 px-2 whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 text-emerald-300 font-semibold">
+<span class="w-2.5 h-2.5 rounded-full orb-sprout inline-block"></span> Broto
+                    </span>
+</td>
+<td class="py-2 px-3 text-white font-sans text-xs font-medium">
+                    Interfaces pequenas, sistemas menos frágeis
+                  </td>
+<td class="py-2 px-3 text-cyan-300/80">Architecture / Go</td>
+<td class="py-2 px-2 text-cyan-200/60 whitespace-nowrap">06 nov 2026</td>
+<td class="py-2 px-1 text-right text-cyan-400">···</td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-cyan-800/20 transition-colors">
+<td class="py-2 px-2 whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 text-cyan-300 font-semibold">
+<span class="w-2.5 h-2.5 rounded-full orb-seed inline-block"></span> Semente
+                    </span>
+</td>
+<td class="py-2 px-3 text-white font-sans text-xs font-medium">
+                    O que acontece entre o teclado e o kernel?
+                  </td>
+<td class="py-2 px-3 text-cyan-300/80">Hardware/Eng / Linux</td>
+<td class="py-2 px-2 text-cyan-200/60 whitespace-nowrap">05 nov 2026</td>
+<td class="py-2 px-1 text-right text-cyan-400">···</td>
+</tr>
+<!-- Row 6 -->
+<tr class="hover:bg-cyan-800/20 transition-colors">
+<td class="py-2 px-2 whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 text-emerald-400 font-semibold">
+<span class="w-2.5 h-2.5 rounded-full orb-evergreen inline-block"></span> Perene
+                    </span>
+</td>
+<td class="py-2 px-3 text-white font-sans text-xs font-medium">
+                    Aprender em público é manter um jardim
+                  </td>
+<td class="py-2 px-3 text-cyan-300/80">Ensaios / Meta</td>
+<td class="py-2 px-2 text-cyan-200/60 whitespace-nowrap">02 nov 2026</td>
+<td class="py-2 px-1 text-right text-cyan-400">···</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<!-- ==================== WINDOW 04: RESOURCES & CHEATSHEETS ==================== -->
+<section class="lg:col-span-4 flex flex-col aero-window" data-purpose="window-resources">
+<!-- Aqua Titlebar -->
+<div class="aero-window-header px-3.5 py-1.5 flex items-center justify-between">
+<div class="flex items-center space-x-2">
+<span class="font-mono text-[11px] font-semibold text-cyan-200 tracking-wider">04 / RESOURCES</span>
+</div>
+<div class="flex items-center space-x-1.5">
+<span class="w-3 h-3 rounded-full aqua-btn-min cursor-pointer inline-block"></span>
+<span class="w-3 h-3 rounded-full aqua-btn-max cursor-pointer inline-block"></span>
+<span class="w-3 h-3 rounded-full aqua-btn-close cursor-pointer inline-block"></span>
+</div>
+</div>
+<!-- Window Inner Content -->
+<div class="p-4 flex-1 flex flex-col justify-between">
+<div>
+<h2 class="text-lg font-bold text-white tracking-tight drop-shadow">
+              Docs, Scripts &amp; Cheatsheets
+            </h2>
+<!-- Terminal Window Box -->
+<div class="mt-2.5 rounded-lg bg-[#01141e]/95 border border-cyan-600/40 p-3 shadow-inner font-mono">
+<!-- Terminal Subtitle -->
+<div class="flex items-center justify-between border-b border-cyan-800/50 pb-1.5 mb-2 text-[10px] text-cyan-400">
+<div class="flex items-center space-x-1">
+<span class="w-2 h-2 rounded-full border border-cyan-400/60"></span>
+<span class="w-2 h-2 rounded-full border border-cyan-400/60"></span>
+<span class="w-2 h-2 rounded-full border border-cyan-400/60"></span>
+</div>
+<span>~/public/resources</span>
+</div>
+<!-- Terminal Prompt Line -->
+<div class="text-xs text-emerald-400 font-bold mb-3">
+                $ ls -lah /downloads
+              </div>
+<!-- File Items List -->
+<div class="space-y-2 text-[11px]">
+<!-- File 1: arch-bootstrap.sh -->
+<div class="flex items-center justify-between group">
+<div>
+<span class="text-cyan-100 font-medium">arch-bootstrap.sh</span>
+<div class="text-[9px] text-cyan-400/60">Arch linux / workstop setup</div>
+</div>
+<div class="flex items-center space-x-1.5">
+<span class="cartridge-btn text-[9px] font-bold text-white px-1.5 py-0.5 rounded">.sh</span>
+<button class="cartridge-btn text-[9px] font-mono px-2 py-0.5 rounded text-white flex items-center gap-1">copy</button>
+<span class="text-[9px] text-cyan-400 w-10 text-right">4.2 KB</span>
+</div>
+</div>
+<!-- File 2: java-collections.pdf -->
+<div class="flex items-center justify-between group">
+<div>
+<span class="text-cyan-100 font-medium">java-collections.pdf</span>
+<div class="text-[9px] text-cyan-400/60">PUCRS / coletor de nodes</div>
+</div>
+<div class="flex items-center space-x-1.5">
+<span class="cartridge-btn text-[9px] font-bold text-white px-1.5 py-0.5 rounded">.pdf</span>
+<button class="bg-cyan-950/70 border border-cyan-500/40 hover:bg-cyan-900/60 text-[9px] font-mono px-1.5 py-0.5 rounded text-cyan-200">↓</button>
+<span class="text-[9px] text-cyan-400 w-10 text-right">128 KB</span>
+</div>
+</div>
+<!-- File 3: git-recovery.md -->
+<div class="flex items-center justify-between group">
+<div>
+<span class="text-cyan-100 font-medium">git-recovery.md</span>
+<div class="text-[9px] text-cyan-400/60">Reflag, rescs &amp; hackers</div>
+</div>
+<div class="flex items-center space-x-1.5">
+<span class="cartridge-btn text-[9px] font-bold text-white px-1.5 py-0.5 rounded">.md</span>
+<button class="cartridge-btn text-[9px] font-mono px-2 py-0.5 rounded text-white flex items-center gap-1">copy</button>
+<span class="text-[9px] text-cyan-400 w-10 text-right">8.6 KB</span>
+</div>
+</div>
+<!-- File 4: automatos-resumo.pdf -->
+<div class="flex items-center justify-between group">
+<div>
+<span class="text-cyan-100 font-medium">automatos-resumo.pdf</span>
+<div class="text-[9px] text-cyan-400/60">PUCRS / recanto de reset</div>
+</div>
+<div class="flex items-center space-x-1.5">
+<span class="cartridge-btn text-[9px] font-bold text-white px-1.5 py-0.5 rounded">.pdf</span>
+<button class="bg-cyan-950/70 border border-cyan-500/40 hover:bg-cyan-900/60 text-[9px] font-mono px-1.5 py-0.5 rounded text-cyan-200">↓</button>
+<span class="text-[9px] text-cyan-400 w-10 text-right">245 KB</span>
+</div>
+</div>
+<!-- File 5: shell-aliases.sh -->
+<div class="flex items-center justify-between group">
+<div>
+<span class="text-cyan-100 font-medium">shell-aliases.sh</span>
+<div class="text-[9px] text-cyan-400/60">daily artillery / zsh</div>
+</div>
+<div class="flex items-center space-x-1.5">
+<span class="cartridge-btn text-[9px] font-bold text-white px-1.5 py-0.5 rounded">.sh</span>
+<button class="cartridge-btn text-[9px] font-mono px-2 py-0.5 rounded text-white flex items-center gap-1">copy</button>
+<span class="text-[9px] text-cyan-400 w-10 text-right">2.1 KB</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Terminal quick hint -->
+<div class="mt-2 text-right text-[10px] font-mono text-cyan-400/70">
+            Press [C] to quick copy latest script
+          </div>
+</div>
+</section>
+</div>
+</main>
+<!-- END: Main Bento Desktop Canvas -->
+<!-- BEGIN: Bottom System Status Bar -->
+<footer class="relative z-10 w-full px-4 py-1.5 border-t border-cyan-500/20 bg-[#041620]/90 backdrop-blur-md text-[11px] font-mono text-cyan-300 flex flex-wrap items-center justify-between gap-2 shadow-2xl" data-purpose="os-statusbar">
+<!-- Left: Systems status quote -->
+<div class="flex items-center space-x-2">
+<span class="text-cyan-200">[ pinhogo.dev ]</span>
+<span class="text-emerald-400">all systems growing...</span>
+<span class="hidden sm:inline text-cyan-500/60">|</span>
+<span class="hidden sm:inline text-cyan-400/80">Built with curiosity, Cultivated in public.</span>
+</div>
+<!-- Center: Email contact -->
+<div class="hidden md:flex items-center space-x-1">
+<a class="hover:text-cyan-100 underline decoration-cyan-500/50" href="mailto:hello@pinhogo.dev">hello@pinhogo.dev →</a>
+</div>
+<!-- Right: GitHub, PGP, Timezone, Keyboard controls -->
+<div class="flex items-center space-x-4">
+<a class="hover:text-white transition" href="https://github.com/pinhogo" rel="noreferrer" target="_blank">GitHub / @pinhogo →</a>
+<span class="text-cyan-400/90">PGP →</span>
+<span class="text-cyan-200/90">UTC-03:00 / BR</span>
+<span class="text-[10px] bg-cyan-950/80 px-2 py-0.5 rounded border border-cyan-600/40 text-cyan-200">
+        [JK] to navigate / [esc] to wander
+      </span>
+</div>
+</footer>
+<!-- END: Bottom System Status Bar -->
+</body></html>
