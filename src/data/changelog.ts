@@ -1,0 +1,72 @@
+import type { LearningNote, NoteCategory } from '../types/portfolio'
+
+export const NOTE_CATEGORIES: NoteCategory[] = [
+  'Todos',
+  'PUCRS',
+  'Tech',
+  'Hardware/Eng',
+  'Ensaios',
+]
+
+export const LEARNING_NOTES: LearningNote[] = [
+  {
+    id: 'note-1',
+    maturity: 'sprout',
+    maturityLabel: 'Broto',
+    title: 'Árvores, filas e a escolha da estrutura certa',
+    related: 'PUCRS / Java / DSA',
+    category: 'PUCRS',
+    updatedAt: '14 nov 2026',
+    summary: 'Trade-offs práticos entre árvores balanceadas, filas de prioridade e análise assintótica.',
+  },
+  {
+    id: 'note-2',
+    maturity: 'evergreen',
+    maturityLabel: 'Perene',
+    title: 'Um ambiente Arch que eu consigo reconstruir',
+    related: 'Linux / dotfiles',
+    category: 'Tech',
+    updatedAt: '12 nov 2026',
+    summary: 'Como versionar pacotes, aliases e configs com GNU Stow para reconstruir o desktop em minutos.',
+  },
+  {
+    id: 'note-3',
+    maturity: 'seed',
+    maturityLabel: 'Semente',
+    title: 'Autômatos: de expressões regulares a estados',
+    related: 'PUCRS / Teoria',
+    category: 'PUCRS',
+    updatedAt: '10 nov 2026',
+    summary: 'Anotações de linguagens formais conectando AFNs, AFDs mínimos e parsers reais.',
+  },
+  {
+    id: 'note-4',
+    maturity: 'sprout',
+    maturityLabel: 'Broto',
+    title: 'Interfaces pequenas, sistemas menos frágeis',
+    related: 'Architecture / Go',
+    category: 'Tech',
+    updatedAt: '06 nov 2026',
+    summary: 'Composição enxuta de contratos para manter código legível para humanos e agentes.',
+  },
+  {
+    id: 'note-5',
+    maturity: 'seed',
+    maturityLabel: 'Semente',
+    title: 'O que acontece entre o teclado e o kernel?',
+    related: 'Hardware/Eng / Linux',
+    category: 'Hardware/Eng',
+    updatedAt: '05 nov 2026',
+    summary: 'Interrupções de hardware, scancodes, subsistema evdev e entrega de eventos ao userspace.',
+  },
+  {
+    id: 'note-6',
+    maturity: 'evergreen',
+    maturityLabel: 'Perene',
+    title: 'Aprender em público é manter um jardim',
+    related: 'Ensaios / Meta',
+    category: 'Ensaios',
+    updatedAt: '02 nov 2026',
+    summary: 'Documentação contínua e notas incrementais como alavanca para projetos mais claros.',
+  },
+]

@@ -1,0 +1,231 @@
+@import "tailwindcss";
+
+:root {
+  --aqua-glass: rgba(13, 56, 75, 0.65);
+  --aqua-glass-border: rgba(118, 222, 255, 0.45);
+  --glow-aqua: rgba(43, 219, 240, 0.35);
+  --window-header-bg: linear-gradient(
+    180deg,
+    rgba(82, 172, 209, 0.85) 0%,
+    rgba(20, 80, 110, 0.85) 50%,
+    rgba(10, 52, 75, 0.95) 100%
+  );
+  --font-sans-aero: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono-aero: 'Fira Code', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: var(--font-sans-aero);
+    background: radial-gradient(circle at 50% 15%, #0d5c75 0%, #062b3b 45%, #02131d 100%);
+    color: #e2f5fc;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  #root {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.font-mono-code {
+  font-family: var(--font-mono-aero);
+}
+
+/* Frutiger Aero Glass Window Shell */
+.aero-window {
+  background: linear-gradient(135deg, rgba(14, 66, 92, 0.72) 0%, rgba(5, 34, 48, 0.88) 100%);
+  border: 1px solid rgba(130, 220, 255, 0.4);
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.6),
+    inset 0 1px 1px rgba(255, 255, 255, 0.6),
+    inset 0 0 15px rgba(59, 196, 230, 0.2);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-radius: 10px;
+}
+
+.aero-window-header {
+  background: linear-gradient(
+    180deg,
+    rgba(135, 206, 235, 0.55) 0%,
+    rgba(40, 120, 160, 0.7) 48%,
+    rgba(15, 60, 85, 0.8) 52%,
+    rgba(25, 95, 130, 0.6) 100%
+  );
+  border-bottom: 1px solid rgba(120, 215, 255, 0.35);
+  border-top-left-radius: 9px;
+  border-top-right-radius: 9px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+/* Window Control Orbs (Aqua OS traffic lights) */
+.aqua-btn-min {
+  background: radial-gradient(circle at 35% 30%, #fff7a1, #dfb112 60%, #855b00);
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.6),
+    inset 0 1px 2px rgba(255, 255, 255, 0.8);
+}
+
+.aqua-btn-max {
+  background: radial-gradient(circle at 35% 30%, #9bfd9e, #2ecc40 60%, #0d5e18);
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.6),
+    inset 0 1px 2px rgba(255, 255, 255, 0.8);
+}
+
+.aqua-btn-close {
+  background: radial-gradient(circle at 35% 30%, #ff9e9e, #e03232 60%, #7d0d0d);
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.6),
+    inset 0 1px 2px rgba(255, 255, 255, 0.8);
+}
+
+/* Aqua Pill Badges */
+.aqua-pill {
+  background: linear-gradient(
+    180deg,
+    rgba(80, 210, 240, 0.4) 0%,
+    rgba(20, 110, 140, 0.6) 50%,
+    rgba(8, 60, 85, 0.8) 100%
+  );
+  border: 1px solid rgba(140, 235, 255, 0.6);
+  box-shadow:
+    inset 0 1px 2px rgba(255, 255, 255, 0.7),
+    0 2px 5px rgba(0, 0, 0, 0.3);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7);
+}
+
+.aqua-pill:hover {
+  background: linear-gradient(
+    180deg,
+    rgba(120, 230, 255, 0.6) 0%,
+    rgba(35, 140, 175, 0.7) 50%,
+    rgba(12, 80, 110, 0.9) 100%
+  );
+  border-color: #a8f0ff;
+}
+
+/* Giant 3D Gel Button ('Baixar CV') */
+.gel-button-large {
+  background: linear-gradient(
+    180deg,
+    #aefae3 0%,
+    #3bf3be 35%,
+    #1ec299 50%,
+    #0fa882 52%,
+    #07775b 88%,
+    #044d3b 100%
+  );
+  border: 1.5px solid #d4fffa;
+  box-shadow:
+    0 4px 15px rgba(0, 0, 0, 0.5),
+    0 0 20px rgba(50, 240, 185, 0.4),
+    inset 0 2px 2px rgba(255, 255, 255, 0.85),
+    inset 0 -2px 4px rgba(0, 40, 30, 0.6);
+  text-shadow:
+    0 1px 1px rgba(255, 255, 255, 0.6),
+    0 -1px 1px rgba(0, 60, 40, 0.8);
+  position: relative;
+  overflow: hidden;
+}
+
+.gel-button-large::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 6%;
+  right: 6%;
+  height: 44%;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.75) 0%,
+    rgba(255, 255, 255, 0.15) 100%
+  );
+  border-radius: 9999px;
+  pointer-events: none;
+}
+
+.gel-button-large:hover {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+}
+
+.gel-button-large:active {
+  transform: translateY(1px);
+  filter: brightness(0.95);
+}
+
+/* Cartridge / Action Pill Buttons */
+.cartridge-btn {
+  background: linear-gradient(180deg, #3aaad8 0%, #176589 50%, #0e4863 100%);
+  border: 1px solid #7be3ff;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.7);
+  text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.6);
+}
+
+.cartridge-btn:hover {
+  background: linear-gradient(180deg, #4dc4f5 0%, #207ca9 50%, #135777 100%);
+}
+
+/* Pulse / Maturity / Status Orbs */
+.orb-sprout {
+  background: radial-gradient(circle at 35% 35%, #88ff9f, #22c55e 60%, #116930);
+  box-shadow:
+    0 0 6px rgba(34, 197, 94, 0.8),
+    inset 0 1px 1px #fff;
+}
+
+.orb-seed {
+  background: radial-gradient(circle at 35% 35%, #76ddff, #0ea5e9 60%, #075276);
+  box-shadow:
+    0 0 6px rgba(14, 165, 233, 0.8),
+    inset 0 1px 1px #fff;
+}
+
+.orb-evergreen {
+  background: radial-gradient(circle at 35% 35%, #80ffda, #10b981 60%, #06553a);
+  box-shadow:
+    0 0 6px rgba(16, 185, 129, 0.8),
+    inset 0 1px 1px #fff;
+}
+
+/* Ambient Scanlines Overlay */
+.aero-scanlines {
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 3px,
+    rgba(34, 211, 238, 0.25) 3px,
+    rgba(34, 211, 238, 0.25) 4px
+  );
+  background-size: 100% 6px;
+}
+
+/* Custom Aero Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(4, 25, 36, 0.7);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(70, 175, 215, 0.5);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(100, 210, 255, 0.8);
+}
