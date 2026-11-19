@@ -1,4 +1,7 @@
-import { evaluateGuardrails } from '../config/assistantGuardrails.ts'
+import {
+  evaluateGuardrails,
+  normalizeForMatching,
+} from '../config/assistantGuardrails.ts'
 import { PORTFOLIO_KNOWLEDGE_BASE } from '../data/knowledgeBase.ts'
 import type { ChatMessage, ChatQuickCommand } from '../types/portfolio.ts'
 
@@ -70,12 +73,24 @@ export function buildLocalFallbackReply(input: string): {
     return { reply: guardrail.reply, blocked: true }
   }
 
-  const normalized = input.trim().toLowerCase()
+  const normalized = normalizeForMatching(input)
   const kb = PORTFOLIO_KNOWLEDGE_BASE
 
   if (
+    /portf?o?lio|portifolio|esse\s+site|este\s+site|gabrielpinho\.me|como\s+(ele\s+)?(fez|desenvolveu|construiu)/.test(
+      normalized,
+    )
+  ) {
+    const portfolio = kb.featuredHighlights.find((item) => item.name === 'gabrielpinho.me')
+    return {
+      blocked: false,
+      reply: `Sobre o gabrielpinho.me: ${portfolio?.summary ?? 'Portfólio OS em React 19 + TypeScript + Tailwind CSS v4.'}`,
+    }
+  }
+
+  if (
     normalized === '--cv' ||
-    /curr[ií]culo|\bcv\b|forma[çc][aã]o|pucrs|ages|experi[eê]ncia/.test(normalized)
+    /curriculo|\bcv\b|formacao|pucrs|ages|experiencia/.test(normalized)
   ) {
     return {
       blocked: false,
@@ -85,7 +100,7 @@ export function buildLocalFallbackReply(input: string): {
 
   if (
     normalized === '--projetos' ||
-    /projeto|repo|github|assin|garden|kiro|dotfiles|sprint|ip[eê]/.test(normalized)
+    /projeto|repo|github|assin|garden|kiro|dotfiles|sprint|ipe/.test(normalized)
   ) {
     const highlights = kb.featuredHighlights
       .map((item, idx) => `${idx + 1}) ${item.name} — ${item.roleOrContext}`)
@@ -118,16 +133,32 @@ export function buildLocalFallbackReply(input: string): {
     }
   }
 
+  if (guardrail.topic === 'casual_pivot') {
+    if (/bolo|cenoura|receita|cozinh/.test(normalized)) {
+      return {
+        blocked: false,
+        reply:
+          'Bolo de cenoura com calda de chocolate é clássico — o Gabriel também curte bastante e sabe fazer! E do jeito que ele trabalha, provavelmente já montaria um fluxo multiagente com MCP e um quadro Kanban só pra garantir o ponto perfeito. Quer ver essa organização em código real? Manda um --projetos ou --stack!',
+      }
+    }
+
+    return {
+      blocked: false,
+      reply:
+        'Boa pergunta! Até entraria fundo nesse assunto, mas o meu foco aqui é contar como o Gabriel Pinho (@pinhogo) transforma ideias em sistemas rastreáveis, orquestração multiagente e interfaces no Figma. Quer conferir? Experimente --cv, --projetos, --stack ou --contato!',
+    }
+  }
+
   return {
     blocked: false,
-    reply: `Sou o assistente CLI do portfólio de ${kb.owner.name} (${kb.owner.githubUsername}). Pergunte sobre currículo (--cv), repositórios GitHub (--projetos), stack & multiagente (--stack) ou contato (--contato).`,
+    reply: `Sou o assistente CLI do portfólio de ${kb.owner.name} (${kb.owner.githubUsername}). Pergunte sobre como este portfólio foi feito, currículo (--cv), repositórios GitHub (--projetos), stack & multiagente (--stack) ou contato (--contato).`,
   }
 }
 
 /**
  * Envia uma pergunta ao endpoint serverless `/api/chat` (Gemini API com guardrails).
  * Quando o servidor/chave não estiver configurado, responde via base de conhecimento local
- * aplicando exatamente os mesmos guardrails de escopo (GitHub + currículo).
+ * com o mesmo tom conversacional e os mesmos guardrails de segurança.
  */
 export async function sendPortfolioChatMessage(
   prompt: string,
@@ -140,7 +171,7 @@ export async function sendPortfolioChatMessage(
     return {
       reply: preflight.reply,
       latencyMs: Math.max(1, Math.round(performance.now() - startedAt)),
-      modelLabel: 'Guardrail // Scoped Policy',
+      modelLabel: 'Guardrail // Security Policy',
       blocked: true,
     }
   }
@@ -192,7 +223,7 @@ export async function sendPortfolioChatMessage(
   return {
     reply: fallback.reply,
     latencyMs,
-    modelLabel: fallback.blocked ? 'Guardrail // Scoped Policy' : 'Llama-3-Garden // Local',
+    modelLabel: fallback.blocked ? 'Guardrail // Security Policy' : 'Llama-3-Garden // Local',
     blocked: fallback.blocked,
   }
 }

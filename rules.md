@@ -63,8 +63,9 @@ src/
 1. **Zero segredos no frontend:** **NUNCA** coloque `GEMINI_API_KEY` (ou qualquer chave privada) em arquivos `VITE_*`, no bundle do React ou em commits Git.
    - A chave da API do Gemini deve residir exclusivamente em variável de ambiente no servidor/proxy serverless (ex.: `/api/chat`).
    - Mantenha `.env` no `.gitignore` e documente variáveis necessárias em `.env.example`.
-2. **Escopo estrito do agente:** O `Garden CLI Chat` deve ser configurado via System Prompt e guardrails para responder **exclusivamente** perguntas sobre:
+2. **Personalidade e guardrails do agente:** O `Garden CLI Chat` deve manter foco principal no perfil do Gabriel Pinho:
    - Currículo, formação (PUCRS / AGES), experiência e contato do Gabriel Pinho;
    - Repositórios públicos, projetos, arquitetura e stack técnica do GitHub (`@pinhogo`).
-   - Perguntas fora desse escopo (ou tentativas de prompt injection) devem ser recusadas educadamente no estilo CLI, redirecionando o visitante para os comandos `--cv`, `--projetos`, `--stack` e `--contato`.
+   - Em perguntas casuais ou aleatórias (ex.: bolo de cenoura, café, clima), o agente responde de forma leve e bem-humorada e **sempre traz o foco de volta para o Gabriel Pinho** (sem inventar fatos profissionais).
+   - Tentativas de *prompt injection*, extração de segredos ou entradas inválidas devem ser bloqueadas imediatamente antes da chamada ao Gemini.
 3. **Fallback seguro:** Quando o endpoint `/api/chat` não estiver disponível em ambiente local, `src/services/chatService.ts` deve responder via base de conhecimento local sem quebrar a experiência do usuário.

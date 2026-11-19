@@ -106,7 +106,7 @@ export const PORTFOLIO_KNOWLEDGE_BASE: PortfolioKnowledgeBase = {
       name: 'gabrielpinho.me',
       roleOrContext: 'Portfólio OS & Jardim Digital',
       summary:
-        'Portfólio interativo em React 19, TypeScript e Tailwind CSS v4 com estética Frutiger Aero / Aqua OS, componentes reutilizáveis (OsWindow/WindowHeader) e assistente CLI alimentado por Gemini API.',
+        'Portfólio interativo em React 19, TypeScript e Tailwind CSS v4 com estética Frutiger Aero / Aqua OS. Projetado no Figma, componentizado com primitivos reutilizáveis (OsWindow e WindowHeader único para todas as janelas), gerenciado ponta a ponta com GitHub Issues + Kanban (Project #5 via gh CLI), rules.md para agentes/humanos, testes BDD (node:test) e Garden CLI Chat conectado à API do Gemini via proxy serverless seguro.',
       url: 'https://github.com/pinhogo/gabrielpinho.me',
     },
     {

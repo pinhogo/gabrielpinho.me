@@ -1,10 +1,9 @@
 export const MAX_CHAT_MESSAGE_LENGTH = 500
 
-export const OUT_OF_SCOPE_REPLY =
-  'Escopo restrito: sou o assistente do portfólio do Gabriel Pinho (@pinhogo) e respondo apenas perguntas sobre o currículo, formação, stack técnica e repositórios GitHub dele. Experimente --cv, --projetos, --stack ou --contato.'
-
 export const INJECTION_BLOCKED_REPLY =
-  'Comando bloqueado pelos guardrails de segurança. Mantenho minhas respostas restritas ao currículo e GitHub do Gabriel Pinho (@pinhogo). Experimente --cv, --projetos, --stack ou --contato.'
+  'Boa tentativa de hackear o terminal! Meus guardrails continuam firmes aqui — mas se quiser saber como o Gabriel Pinho (@pinhogo) protege proxies e orquestra agentes de IA, manda um --projetos ou --stack.'
+
+export type ChatTopic = 'portfolio' | 'casual_pivot'
 
 export interface InputValidationResult {
   valid: boolean
@@ -14,7 +13,8 @@ export interface InputValidationResult {
 
 export interface GuardrailDecision {
   allowed: boolean
-  reason?: 'invalid_input' | 'prompt_injection' | 'out_of_scope'
+  topic?: ChatTopic
+  reason?: 'invalid_input' | 'prompt_injection'
   reply?: string
 }
 
@@ -51,20 +51,13 @@ const ALLOWED_CLI_COMMANDS = new Set([
 ])
 
 const PORTFOLIO_SCOPE_PATTERNS: RegExp[] = [
-  /\b(gabriel|pinho|pinhogo|rodrigues|ele|dele|voce|perfil|portfolio|site)\b/i,
+  /\b(gabriel|pinho|pinhogo|rodrigues|perfil|portf?o?lio|portifolio|site)\b/i,
   /\b(cv|curriculo|resume|formacao|faculdade|universidade|pucrs|ages|curso|graduacao|estagio|vaga|contratar|hire|trabalho|experiencia|carreira)\b/i,
-  /\b(git|github|repo|repositorio|repositorios|projeto|projetos|codigo|arquitetura|assin\.?art|assinart|kirocrew|kiro|garden|dotfiles|sprint3|graficosux|softwarebasico|trabalhofinal|mastermind|ipe)\b/i,
+  /\b(git|github|repo|repositorio|repositorios|projeto|projetos|codigo|arquitetura|desenvolveu|construiu|assin\.?art|assinart|kirocrew|kiro|garden|dotfiles|sprint3|graficosux|softwarebasico|trabalhofinal|mastermind|ipe)\b/i,
   /\b(stack|tecnologia|tecnologias|linguagem|linguagens|framework|ferramenta|ferramentas|typescript|javascript|react|vite|tailwind|php|laravel|python|java|go|golang|node|express|prisma|postgres|mysql|sqlite|mongo|docker|linux|arch|figma|mcp|orca|multiagente|multi-?agent|agente|agentes|bdd|sdd|kanban|issues|documentacao|cli)\b/i,
   /\b(contato|email|e-mail|linkedin|redes|falar|mensagem|localizacao|cidade|porto\s+alegre|fuso|timezone)\b/i,
-  /^(oi|ola|hey|hello|hi|bom\s+dia|boa\s+tarde|boa\s+noite|tudo\s+bem|quem\s+e\s+voce|o\s+que\s+voce\s+faz)[!?. ]*$/i,
-]
-
-const CLEARLY_OFF_TOPIC_PATTERNS: RegExp[] = [
-  /\b(receita\s+de|como\s+fazer\s+bolo|ingrediente|cozinhar)\b/i,
-  /\b(previsao\s+do\s+tempo|vai\s+chover|clima\s+hoje)\b/i,
-  /\b(cotacao\s+do\s+dolar|preco\s+do\s+bitcoin|aposta|loteria|mega-?sena)\b/i,
-  /\b(piada|me\s+conte\s+uma\s+historia|escreva\s+um\s+poema|poesia|horoscopo|signo)\b/i,
-  /\b(politica|presidente|futebol|placar\s+do\s+jogo|campeonato)\b/i,
+  /^(oi|ola|hey|hello|hi|bom\s+dia|boa\s+tarde|boa\s+noite|tudo\s+bem)[!?. ,]*$/i,
+  /\b(quem\s+e\s+voce|o\s+que\s+voce\s+faz)\b/i,
 ]
 
 export function validateChatInput(rawMessage: unknown): InputValidationResult {
@@ -94,21 +87,25 @@ export function detectPromptInjection(message: string): boolean {
   return PROMPT_INJECTION_PATTERNS.some((pattern) => pattern.test(normalized))
 }
 
-export function isMessageWithinPortfolioScope(message: string): boolean {
+export function classifyChatTopic(message: string): ChatTopic {
   const normalized = normalizeForMatching(message)
   if (ALLOWED_CLI_COMMANDS.has(normalized)) {
-    return true
+    return 'portfolio'
   }
 
-  if (CLEARLY_OFF_TOPIC_PATTERNS.some((pattern) => pattern.test(normalized))) {
-    return false
+  if (PORTFOLIO_SCOPE_PATTERNS.some((pattern) => pattern.test(normalized))) {
+    return 'portfolio'
   }
 
-  return PORTFOLIO_SCOPE_PATTERNS.some((pattern) => pattern.test(normalized))
+  return 'casual_pivot'
 }
 
 /**
- * Executa os guardrails em cascata (validação -> anti-injection -> escopo estrito).
+ * Guardrails de segurança em cascata:
+ * 1. Bloqueia entradas inválidas/excessivas (`invalid_input`)
+ * 2. Bloqueia tentativas de prompt injection e vazamento de segredos (`prompt_injection`)
+ * 3. Permite perguntas sobre o portfólio (`portfolio`) e perguntas casuais/aleatórias
+ *    (`casual_pivot`), que serão respondidas de forma leve e redirecionadas ao Gabriel.
  */
 export function evaluateGuardrails(rawMessage: unknown): GuardrailDecision {
   const validation = validateChatInput(rawMessage)
@@ -128,13 +125,8 @@ export function evaluateGuardrails(rawMessage: unknown): GuardrailDecision {
     }
   }
 
-  if (!isMessageWithinPortfolioScope(validation.sanitized)) {
-    return {
-      allowed: false,
-      reason: 'out_of_scope',
-      reply: OUT_OF_SCOPE_REPLY,
-    }
+  return {
+    allowed: true,
+    topic: classifyChatTopic(validation.sanitized),
   }
-
-  return { allowed: true }
 }

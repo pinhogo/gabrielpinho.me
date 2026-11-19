@@ -13,13 +13,14 @@ export function geminiDevProxyPlugin(): Plugin {
   return {
     name: 'gabrielpinho-gemini-dev-proxy',
     configureServer(server) {
-      const env = loadEnv(server.config.mode, server.config.root, '')
-
       server.middlewares.use('/api/chat', async (req, res, next) => {
         if (req.method !== 'POST') {
           next()
           return
         }
+
+        // Recarrega .env sob demanda em dev para não precisar reiniciar o Vite ao trocar modelo/chave
+        const env = loadEnv(server.config.mode, server.config.root, '')
 
         const chunks: Buffer[] = []
         for await (const chunk of req) {
@@ -42,6 +43,10 @@ export function geminiDevProxyPlugin(): Plugin {
           model: env.GEMINI_MODEL || process.env.GEMINI_MODEL,
           clientIp: req.socket.remoteAddress || 'local-dev',
         })
+
+        if (result.status >= 500 && result.body.error) {
+          server.config.logger.warn(`[api/chat] ${result.body.error}`)
+        }
 
         res.statusCode = result.status
         res.setHeader('Content-Type', 'application/json; charset=utf-8')

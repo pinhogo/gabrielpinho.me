@@ -1,6 +1,8 @@
 import { evaluateGuardrails } from '../src/config/assistantGuardrails.ts'
 import { buildAssistantSystemPrompt } from '../src/config/assistantPrompt.ts'
 
+export const DEFAULT_GEMINI_MODEL = 'gemini-flash-lite-latest'
+
 export interface ChatHistoryTurn {
   role: 'system' | 'user' | 'assistant'
   content: string
@@ -79,7 +81,7 @@ export async function handlePortfolioChatRequest(
       status: guardrail.reason === 'invalid_input' ? 400 : 200,
       body: {
         reply: guardrail.reply,
-        model: 'Guardrail // Scoped Policy',
+        model: 'Guardrail // Security Policy',
         blocked: true,
         error: guardrail.reason === 'invalid_input' ? guardrail.reply : undefined,
       },
@@ -96,7 +98,7 @@ export async function handlePortfolioChatRequest(
     }
   }
 
-  const model = options.model?.trim() || 'gemini-2.5-flash'
+  const model = options.model?.trim() || DEFAULT_GEMINI_MODEL
   const safeHistory = Array.isArray(payload.history)
     ? payload.history
         .filter(
@@ -134,8 +136,8 @@ export async function handlePortfolioChatRequest(
       },
       contents,
       generationConfig: {
-        temperature: 0.3,
-        maxOutputTokens: 450,
+        temperature: 0.55,
+        maxOutputTokens: 500,
       },
     }),
   })
@@ -144,7 +146,7 @@ export async function handlePortfolioChatRequest(
     return {
       status: 502,
       body: {
-        error: `Falha ao consultar a API do Gemini (HTTP ${response.status}).`,
+        error: `Falha ao consultar o modelo "${model}" na API do Gemini (HTTP ${response.status}).`,
       },
     }
   }
@@ -168,7 +170,7 @@ export async function handlePortfolioChatRequest(
     status: 200,
     body: {
       reply: replyText,
-      model: `${model} // Scoped Proxy`,
+      model: `${model} // Gemini Proxy`,
       blocked: false,
     },
   }

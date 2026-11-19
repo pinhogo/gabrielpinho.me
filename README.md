@@ -32,7 +32,7 @@ npm run dev
 2. Defina sua chave apenas no lado servidor (sem prefixo `VITE_`):
    ```env
    GEMINI_API_KEY=sua_chave_aqui
-   GEMINI_MODEL=gemini-2.5-flash
+   GEMINI_MODEL=gemini-flash-lite-latest
    ```
 3. Em desenvolvimento (`npm run dev`), o middleware `server/geminiDevProxy.ts` atende `POST /api/chat` localmente sem expor a chave ao navegador. Em produção (ex.: Vercel), `api/chat.ts` assume o mesmo endpoint usando a variável de ambiente configurada no provedor.
 
