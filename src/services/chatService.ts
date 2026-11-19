@@ -33,7 +33,7 @@ export const INITIAL_CHAT_MESSAGES: ChatMessage[] = [
   {
     id: 'sys-1',
     sender: 'system',
-    content: '> Conectado ao repositório & base de dados do Gabriel Rodrigues.',
+    content: '> Conectado ao repositório & base de dados do Gabriel Pinho.',
   },
   {
     id: 'sys-2',

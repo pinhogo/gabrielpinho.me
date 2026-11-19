@@ -64,7 +64,7 @@ src/
    - A chave da API do Gemini deve residir exclusivamente em variável de ambiente no servidor/proxy serverless (ex.: `/api/chat`).
    - Mantenha `.env` no `.gitignore` e documente variáveis necessárias em `.env.example`.
 2. **Escopo estrito do agente:** O `Garden CLI Chat` deve ser configurado via System Prompt e guardrails para responder **exclusivamente** perguntas sobre:
-   - Currículo, formação (PUCRS / AGES), experiência e contato do Gabriel Rodrigues;
+   - Currículo, formação (PUCRS / AGES), experiência e contato do Gabriel Pinho;
    - Repositórios públicos, projetos, arquitetura e stack técnica do GitHub (`@pinhogo`).
    - Perguntas fora desse escopo (ou tentativas de prompt injection) devem ser recusadas educadamente no estilo CLI, redirecionando o visitante para os comandos `--cv`, `--projetos`, `--stack` e `--contato`.
 3. **Fallback seguro:** Quando o endpoint `/api/chat` não estiver disponível em ambiente local, `src/services/chatService.ts` deve responder via base de conhecimento local sem quebrar a experiência do usuário.

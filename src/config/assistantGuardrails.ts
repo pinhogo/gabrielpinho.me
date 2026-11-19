@@ -1,10 +1,10 @@
 export const MAX_CHAT_MESSAGE_LENGTH = 500
 
 export const OUT_OF_SCOPE_REPLY =
-  'Escopo restrito: sou o assistente do portfólio do Gabriel Rodrigues (@pinhogo) e respondo apenas perguntas sobre o currículo, formação, stack técnica e repositórios GitHub dele. Experimente --cv, --projetos, --stack ou --contato.'
+  'Escopo restrito: sou o assistente do portfólio do Gabriel Pinho (@pinhogo) e respondo apenas perguntas sobre o currículo, formação, stack técnica e repositórios GitHub dele. Experimente --cv, --projetos, --stack ou --contato.'
 
 export const INJECTION_BLOCKED_REPLY =
-  'Comando bloqueado pelos guardrails de segurança. Mantenho minhas respostas restritas ao currículo e GitHub do Gabriel Rodrigues (@pinhogo). Experimente --cv, --projetos, --stack ou --contato.'
+  'Comando bloqueado pelos guardrails de segurança. Mantenho minhas respostas restritas ao currículo e GitHub do Gabriel Pinho (@pinhogo). Experimente --cv, --projetos, --stack ou --contato.'
 
 export interface InputValidationResult {
   valid: boolean

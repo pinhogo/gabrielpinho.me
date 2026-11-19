@@ -40,7 +40,7 @@ export interface PortfolioKnowledgeBase {
 
 export const PORTFOLIO_KNOWLEDGE_BASE: PortfolioKnowledgeBase = {
   owner: {
-    name: 'Gabriel Pinho (Gabriel Rodrigues)',
+    name: 'Gabriel Pinho',
     githubUsername: '@pinhogo',
     githubUrl: 'https://github.com/pinhogo',
     website: 'https://gabrielpinho.me',

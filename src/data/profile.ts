@@ -4,7 +4,7 @@ export const IDENTITY_PROFILE: IdentityProfile = {
   brand: 'gabrielpinho.me',
   statusText: 'online',
   institution: 'PUCRS',
-  name: 'Gabriel Rodrigues',
+  name: 'Gabriel Pinho',
   role: '/ Software Engineer',
   bio: 'CS / Software Engineering student at PUCRS. Building systems, tooling, and cultivating public knowledge.',
   stack: ['Java', 'PHP', 'TypeScript', 'Go', 'Linux/Arch'],
